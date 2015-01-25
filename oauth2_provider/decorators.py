@@ -9,7 +9,7 @@ from .oauth2_backends import OAuthLibCore
 from .settings import oauth2_settings
 
 
-def protected_resource(scopes=None, validator_cls=OAuth2Validator, server_cls=Server):
+def protected_resource(scopes=None, validator_cls=OAuth2Validator, server_cls=oauth2_settings.OAUTH2_SERVER()):
     """
     Decorator to protect views by providing OAuth2 authentication out of the box, optionally with
     scope handling.
@@ -37,7 +37,7 @@ def protected_resource(scopes=None, validator_cls=OAuth2Validator, server_cls=Se
     return decorator
 
 
-def rw_protected_resource(scopes=None, validator_cls=OAuth2Validator, server_cls=Server):
+def rw_protected_resource(scopes=None, validator_cls=OAuth2Validator, server_cls=oauth2_settings.OAUTH2_SERVER()):
     """
     Decorator to protect views by providing OAuth2 authentication and read/write scopes out of the
     box.

@@ -42,7 +42,7 @@ DEFAULTS = {
     'APPLICATION_MODEL': getattr(settings, 'OAUTH2_PROVIDER_APPLICATION_MODEL', 'oauth2_provider.Application'),
     'REQUEST_APPROVAL_PROMPT': 'force',
     'ALLOWED_REDIRECT_URI_SCHEMES': ['http', 'https'],
-
+    'OAUTH2_SERVER': 'oauthlib.oauth2.Server',
     # Special settings that will be evaluated at runtime
     '_SCOPES': [],
 }
@@ -52,6 +52,7 @@ MANDATORY = (
     'CLIENT_ID_GENERATOR_CLASS',
     'CLIENT_SECRET_GENERATOR_CLASS',
     'OAUTH2_VALIDATOR_CLASS',
+    'OAUTH2_SERVER',
     'SCOPES',
     'ALLOWED_REDIRECT_URI_SCHEMES',
 )
