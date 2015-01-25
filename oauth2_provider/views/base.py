@@ -6,8 +6,6 @@ from django.views.generic import View, FormView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 
-from oauthlib.oauth2 import Server
-
 from braces.views import LoginRequiredMixin, CsrfExemptMixin
 
 from ..settings import oauth2_settings
@@ -20,7 +18,6 @@ from .mixins import OAuthLibMixin
 Application = get_application_model()
 
 log = logging.getLogger('oauth2_provider')
-
 
 class BaseAuthorizationView(LoginRequiredMixin, OAuthLibMixin, View):
     """
@@ -73,7 +70,7 @@ class AuthorizationView(BaseAuthorizationView, FormView):
     template_name = 'oauth2_provider/authorize.html'
     form_class = AllowForm
 
-    server_class = Server
+    server_class = oauth2_settings.OAUTH2_SERVER
     validator_class = oauth2_settings.OAUTH2_VALIDATOR_CLASS
 
     skip_authorization_completely = False
@@ -164,7 +161,7 @@ class TokenView(CsrfExemptMixin, OAuthLibMixin, View):
     * Password
     * Client credentials
     """
-    server_class = Server
+    server_class = oauth2_settings.OAUTH2_SERVER
     validator_class = oauth2_settings.OAUTH2_VALIDATOR_CLASS
 
     @method_decorator(sensitive_post_parameters('password'))
@@ -181,7 +178,7 @@ class RevokeTokenView(CsrfExemptMixin, OAuthLibMixin, View):
     """
     Implements an endpoint to revoke access or refresh tokens
     """
-    server_class = Server
+    server_class = oauth2_settings.OAUTH2_SERVER
     validator_class = oauth2_settings.OAUTH2_VALIDATOR_CLASS
 
     def post(self, request, *args, **kwargs):
